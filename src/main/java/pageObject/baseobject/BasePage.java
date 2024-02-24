@@ -11,8 +11,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static driver.DriverCreation.*;
+import static java.io.File.separator;
 
 @Log4j
 public class BasePage {
@@ -20,6 +23,7 @@ public class BasePage {
     protected WebDriver driver;
     protected Actions actions;
     protected WebDriverWait wait;
+    protected final String FILE_PATH = System.getProperty("user.dir") + separator + "src" + separator + "test" + separator + "resources" + separator + "files" + separator;
 
     {
         driver = getWebDriver();
@@ -48,20 +52,78 @@ public class BasePage {
         click(By.xpath(xpath));
     }
 
+    protected void doubleClick(WebElement element) {
+        log.info("Double click on - " + element);
+        waitUntilElementToBeClickable(element);
+        actions.doubleClick(element);
+    }
+
+    protected void doubleClick(By by) {
+        doubleClick(driver.findElement(by));
+    }
+
+    protected void doubleClick(String xpath) {
+        doubleClick(By.xpath(xpath));
+    }
+
+    protected void scrollToElement(WebElement webElement) {
+        log.info("Scrolling to element - " + webElement);
+        actions.scrollToElement(webElement);
+    }
+
+    protected void scrollToElement(By by) {
+        log.info("Scrolling to element - " + by);
+        actions.scrollToElement(driver.findElement(by));
+    }
+
+    protected void scrollToElement(String xpath) {
+        scrollToElement(By.xpath(xpath));
+    }
+
+    protected void enter(By by, CharSequence... charSequences) {
+        enter(driver.findElement(by), charSequences);
+    }
+
+    protected void enter(WebElement element, CharSequence... charSequences) {
+        log.info("Enter in :: " + element + ", next values :: " + Arrays.toString(charSequences));
+        element.clear();
+        sendKeys(element, charSequences);
+    }
+
     protected void sendKeys(WebElement webElement, CharSequence... charSequences) {
         log.info("Enter in -" + webElement + " next values - " + Arrays.toString(charSequences));
-        webElement.clear();
         webElement.sendKeys(charSequences);
     }
 
     protected void sendKeys(By by, CharSequence... charSequences) {
         log.info("Enter in -" + by + " next values - " + Arrays.toString(charSequences));
-        driver.findElement(by).clear();
         driver.findElement(by).sendKeys(charSequences);
     }
 
     protected void sendKeys(String xpath, CharSequence... charSequences) {
         sendKeys(By.xpath(xpath), charSequences);
+    }
+
+    protected Integer getElementsCount(By by) {
+        return driver.findElements(by).size();
+    }
+
+    protected String getElementText(By by) {
+        waitUntilElementBeVisible(by);
+        return getElementText(driver.findElement(by));
+    }
+
+    protected String getElementText(WebElement webElement) {
+        waitUntilElementBeVisible(webElement);
+        return webElement.getText();
+    }
+
+    protected List<String> getElementTexts(By by) {
+        return getElementTexts(driver.findElements(by));
+    }
+
+    protected List<String> getElementTexts(List<WebElement> webElements) {
+        return webElements.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     protected void waitUntilTextToBe(By by, String expectedText) {

@@ -10,6 +10,7 @@ public class SimpleListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
+        log.info("I'm started with - " + context.getSuite().getName());
         if(System.getProperties().containsKey("config")) {
             setUpProperty(System.getProperty("config"));
         }
