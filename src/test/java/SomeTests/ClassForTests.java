@@ -15,9 +15,17 @@ public class ClassForTests extends BaseTest {
     @Test
     public void searchTest() {
         get(Cookies.class).denyCookies();
-        get(Header.class).uploadImage("socks.png");
-        get(SearchResultPage.class).moveToProduct("Носки", 1);
-        System.out.println(get(ProductPage.class).getProductPrice());
+        get(Header.class).waitUntilPageLoaded().search("Ручки");
+        get(SearchResultPage.class)
+                .waitUntilPageLoaded()
+                .addToBasket("Ручки",1)
+                .addToBasket("Ручки",2);
+        System.out.println(get(SearchResultPage.class).getProductNamesData());
+        get(Header.class).moveToShoppingCard();
+        get(BasketPage.class).waitUntilPageLoaded();
+        System.out.println(get(BasketPage.class).getPricesData());
+
+
     }
 
 

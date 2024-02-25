@@ -126,6 +126,14 @@ public class BasePage {
         return webElements.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
+    protected void waitUntil(Integer seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void waitUntilTextToBe(By by, String expectedText) {
         log.info("Wait until text to be - " + expectedText);
         wait.until(ExpectedConditions.textToBe(by,expectedText));
@@ -178,5 +186,12 @@ public class BasePage {
         log.info("Wait until element to be visible - ");
         waitUntilElementBeVisible(By.xpath(xpath));
     }
+
+    protected void waitUntilAllElementsBeVisible(By by) {
+        log.info("Wait until all elements to visible");
+        wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElement(by)));
+    }
+
+
 
 }

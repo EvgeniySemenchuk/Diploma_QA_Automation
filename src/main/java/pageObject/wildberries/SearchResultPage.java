@@ -4,14 +4,19 @@ import io.cucumber.java.eo.Se;
 import io.cucumber.java.ja.然し;
 import io.cucumber.java.sl.In;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pageObject.baseobject.BasePage;
 
-public class SearchResultPage extends BasePage {
+import java.util.List;
+
+public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     private final By searchResult = By.tagName("h1");
     private final By totalGoods = By.xpath("//div[@class=\"total-goods\"]");
     private final By backBtn = By.xpath("//a[@data-tag=\"goMain\"]");
     private final By scrollUpBtn = By.xpath("//*[contains(@class,\"scroll-top\")]");
+    private final By productNames = By.xpath("//*[@class=\"product-card__name\"]");
+    private final By switchers = By.xpath("//*[@class=\"switcher\"]//button");
 
     public String getNumberOfGoods() {
         return getElementText(totalGoods);
@@ -35,6 +40,18 @@ public class SearchResultPage extends BasePage {
 
     private String getMoveToProduct(String productName, String index) {
         return getProductCard(productName, index).concat("//a[@class=\"product-card__link\"]");
+    }
+
+    private List<WebElement> getProductNames() {
+        return driver.findElements(productNames);
+    }
+
+    public List<String> getSwitchersData() {
+        return getElementTexts(switchers);
+    }
+
+    public List<String> getProductNamesData() {
+        return getElementTexts(getProductNames());
     }
 
     public SearchResultPage addToBasket(String productName, Integer productIndex) {
@@ -64,6 +81,10 @@ public class SearchResultPage extends BasePage {
         waitUntilElementToBeClickable(scrollUpBtn);
         click(scrollUpBtn);
         return this;
+    }
+
+    public Boolean verifySearch(String search) {
+        return getProductNamesData().stream().anyMatch(el->el.contains(search));
     }
 
 

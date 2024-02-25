@@ -5,7 +5,7 @@ import org.openqa.selenium.Keys;
 import pageObject.baseobject.BasePage;
 import propertyUtils.PropertyReader;
 
-public class Header extends BasePage {
+public class Header extends BaseWBPage<Header> {
 
     private final By searchField = By.xpath("//*[@data-text=\"strFindProducts\"]");
     private final By searchBtn = By.xpath("//button[@data-tag=\"searchBtn\"]");
