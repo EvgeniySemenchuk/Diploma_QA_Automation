@@ -1,11 +1,8 @@
 package pageObject.wildberries;
 
-import io.cucumber.java.eo.Se;
-import io.cucumber.java.ja.然し;
-import io.cucumber.java.sl.In;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import pageObject.baseobject.BasePage;
+
 
 import java.util.List;
 
@@ -86,7 +83,5 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
     public Boolean verifySearch(String search) {
         return getProductNamesData().stream().anyMatch(el->el.contains(search));
     }
-
-
 
 }

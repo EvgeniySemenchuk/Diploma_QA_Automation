@@ -5,12 +5,12 @@ import org.openqa.selenium.WebElement;
 import pageObject.baseobject.BasePage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class BasketPage extends BaseWBPage<BasePage> {
+public class BasketPage extends BaseWBPage<BasketPage> {
 
     private final By productCount = By.xpath("//*[@data-tag=\"counter\"]");
     private final By totalPrice = By.xpath("//*[@data-tag=\"totalSum\"]");
+    private final By basketSize = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]");
     private final By prices = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//div[@data-tag=\"salePrice\"]");
     private final By itemNames = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//*[@data-tag=\"itemName\"]");
 
@@ -19,7 +19,7 @@ public class BasketPage extends BaseWBPage<BasePage> {
     }
 
     private String getProductCard(String productName, String index) {
-        return "//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//span[contains(.,'" + productName + "')])[" + index + "]";
+        return "(//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//span[contains(.,'" + productName + "')])[" + index + "]";
     }
 
     private String getDeleteProduct(String productName) {
@@ -86,12 +86,18 @@ public class BasketPage extends BaseWBPage<BasePage> {
         return getElementText(totalPrice);
     }
 
+    public Integer getBasketSize() {
+        return driver.findElements(basketSize).size();
+    }
+
     public BasketPage deleteProduct(String productName) {
+        scrollToElement(getDeleteProduct(productName));
         click(getDeleteProduct(productName));
         return this;
     }
 
     public BasketPage deleteProduct(String productName, Integer index) {
+        scrollToElement(getDeleteProduct(productName, index.toString()));
         click(getDeleteProduct(productName, index.toString()));
         return this;
     }

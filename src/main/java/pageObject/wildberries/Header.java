@@ -14,6 +14,7 @@ public class Header extends BaseWBPage<Header> {
     private final By navigationBtn = By.xpath("//button[@data-tag=\"catalogBtn\"]");
     private final By deliveryBtn = By.xpath("(//a[@class=\"user-menu__btn\"])[1]");
     private final By favouritesBtn = By.xpath("(//a[@class=\"user-menu__btn\"])[3]");
+    private final By itemsNumberInBasket = By.xpath("//*[@class=\"user-menu__badge\"]");
 
     public Header open() {
         navigateTo(PropertyReader.getProperties().getProperty("url"));
@@ -49,6 +50,10 @@ public class Header extends BaseWBPage<Header> {
     public Header uploadImage(String imageName) {
         sendKeys(searchImage, FILE_PATH.concat(imageName));
         return this;
+    }
+
+    public String getNumberOfItemsInBasket() {
+        return getElementText(itemsNumberInBasket);
     }
 
 

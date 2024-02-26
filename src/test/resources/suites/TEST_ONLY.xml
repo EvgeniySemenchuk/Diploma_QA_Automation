@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="uploadFiles.UploadFilesTests"/>
+            <class name="basketTests.AddAndDeleteItemsTests"/>
         </classes>
     </test>
 </suite>
