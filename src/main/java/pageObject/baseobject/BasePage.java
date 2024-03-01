@@ -173,18 +173,32 @@ public class BasePage {
     }
 
     protected void waitUntilElementBeVisible(By by) {
-        log.info("Wait until element to visible");
+        log.info("Wait until element to visible - " + by);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     protected void waitUntilElementBeVisible(WebElement webElement) {
-        log.info("Wait until element to be visible - ");
+        log.info("Wait until element to be visible - " + webElement);
         wait.until(ExpectedConditions.visibilityOf(webElement));
     }
 
     protected void waitUntilElementBeVisible(String xpath) {
-        log.info("Wait until element to be visible - ");
+        log.info("Wait until element to be visible - " + By.xpath(xpath));
         waitUntilElementBeVisible(By.xpath(xpath));
+    }
+
+    protected void waitUntilElementToBeNotVisible(WebElement webElement) {
+        log.info("Wait until element to be not visible - " + webElement);
+        wait.until(ExpectedConditions.invisibilityOf(webElement));
+    }
+
+    protected void waitUntilElementToBeNotVisible(By by) {
+        log.info("Wait until element to be not visible - " + by);
+        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(by)));
+    }
+
+    protected void waitUntilElementToBeNotVisible(String xpath) {
+        waitUntilElementToBeNotVisible(xpath);
     }
 
     protected void waitUntilAllElementsBeVisible(By by) {

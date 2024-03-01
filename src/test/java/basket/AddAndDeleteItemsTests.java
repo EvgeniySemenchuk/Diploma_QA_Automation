@@ -1,7 +1,6 @@
-package basketTests;
+package basket;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -22,7 +21,7 @@ public class AddAndDeleteItemsTests extends BaseTest {
     @Test(priority = 1,dataProvider = "item")
     public void addItemTest(String item, String addIndex, String deleteIndex) {
         get(Header.class).search(item);
-        get(SearchResultPage.class).waitUntilPageLoaded()
+        get(SearchResultPage.class).verifyPage()
                 .addToBasket(item,1)
                 .addToBasket(item,2)
                 .addToBasket(item,3);

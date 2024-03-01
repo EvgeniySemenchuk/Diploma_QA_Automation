@@ -9,7 +9,12 @@ public class BaseWBPage<P> extends BasePage {
     private final String preloader = "//*[@class='general-preloader']";
 
     public P waitUntilPageLoaded() {
-        waitUntil(1);
+        waitUntilPageLoaded(1);
+        return me();
+    }
+
+    public P waitUntilPageLoaded(Integer timeout) {
+        waitUntil(timeout);
         wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.xpath(preloader))));
         return me();
     }

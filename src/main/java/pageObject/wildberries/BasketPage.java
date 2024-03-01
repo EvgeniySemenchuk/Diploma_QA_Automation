@@ -1,5 +1,7 @@
 package pageObject.wildberries;
 
+import io.cucumber.java.eo.Do;
+import io.opentelemetry.api.metrics.DoubleUpDownCounterBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pageObject.baseobject.BasePage;
@@ -8,11 +10,19 @@ import java.util.List;
 
 public class BasketPage extends BaseWBPage<BasketPage> {
 
+    private final By basketContent = By.xpath("//*[@class=\"container\"]");
     private final By productCount = By.xpath("//*[@data-tag=\"counter\"]");
     private final By totalPrice = By.xpath("//*[@data-tag=\"totalSum\"]");
     private final By basketSize = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]");
     private final By prices = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//div[@data-tag=\"salePrice\"]");
     private final By itemNames = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//*[@data-tag=\"itemName\"]");
+
+    public BasketPage verifyPage() {
+        waitUntilElementBeVisible(productCount);
+        waitUntilElementBeVisible(totalPrice);
+        waitUntilElementBeVisible(basketContent);
+        return this;
+    }
 
     private String getProductCard(String productName) {
         return "//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//span[contains(.,'" + productName + "')]";
@@ -82,12 +92,37 @@ public class BasketPage extends BaseWBPage<BasketPage> {
         return getElementText(productCount);
     }
 
+    public Integer getBasketSize() {
+        return driver.findElements(basketSize).size();
+    }
+
     public String getTotalPrice() {
         return getElementText(totalPrice);
     }
 
-    public Integer getBasketSize() {
-        return driver.findElements(basketSize).size();
+    public String getTotalPriceNum() {
+        String totalSum = getTotalPrice();
+        String result = "";
+        for (Character ch: totalSum.toCharArray()) {
+            if(Character.isDigit(ch) || ch.equals(',')) result += ch;
+        }
+        return result.replace(',','.');
+    }
+
+    private String convertSumInRightFormat(String sum) {
+        String result = "";
+        for (Character ch: sum.toCharArray()) {
+            if(Character.isDigit(ch) || ch.equals(',')) result += ch;
+        }
+        return result.replace(',','.');
+    }
+
+    public String getTotalPriceBySum() {
+        Double sum = 0.0;
+        for (String price: getPricesData()) {
+            sum += Double.parseDouble(convertSumInRightFormat(price));
+        }
+        return convertSumInRightFormat(String.format("%.2f", sum));
     }
 
     public BasketPage deleteProduct(String productName) {
