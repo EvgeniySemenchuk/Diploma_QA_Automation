@@ -3,6 +3,7 @@ package pageObject.baseobject;
 import io.cucumber.java.en_old.Ac;
 import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -132,6 +133,19 @@ public class BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected void clearField(WebElement element) {
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        element.sendKeys(Keys.DELETE);
+    }
+
+    protected void clearField(By by) {
+        clearField(driver.findElement(by));
+    }
+
+    protected void clearField(String xpath) {
+        clearField(By.xpath(xpath));
     }
 
     protected void waitUntilTextToBe(By by, String expectedText) {

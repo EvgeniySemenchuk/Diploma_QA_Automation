@@ -1,10 +1,12 @@
 package pageObject.wildberries;
 
+import io.cucumber.java.eo.Do;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultPage extends BaseWBPage<SearchResultPage> {
@@ -15,9 +17,51 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
     private final By backBtn = By.xpath("//a[@data-tag=\"goMain\"]");
     private final By scrollUpBtn = By.xpath("//*[contains(@class,\"scroll-top\")]");
     private final By productNames = By.xpath("//*[@class=\"product-card__name\"]");
-    private final By switchers = By.xpath("//*[@class=\"switcher\"]//button");
     private final By notification = By.id("wbx-notification");
     private final By notFoundTitle = By.xpath("//*[@class=\"page-not-found__title\"]");
+    private final By productPrices = By.xpath("//*[@data-tag=\"salePrice\"]");
+    private final By filtersBtn = By.xpath("//button[@data-text=\"strFilters\"]");
+    private final By totalUsedFilters = By.xpath("//span[@data-tag=\"totalDesktop\"]");
+
+    private String getSwitcher(String switcher) {
+        return "//*[@class=\"switcher\"]//button[contains(text(), \"" + switcher.toLowerCase() + "\")]";
+    }
+
+    public SearchResultPage openFilters() {
+        click(filtersBtn);
+        return me();
+    }
+
+    public SearchResultPage chooseSwitcher(String switcher) {
+        click(getSwitcher(switcher));
+        return me();
+    }
+
+    private List<WebElement> getProductPrices() {
+        return driver.findElements(productPrices);
+    }
+
+    public List<String> getProductPricesData() {
+        return getElementTexts(getProductPrices());
+    }
+
+    public List<Double> getProductPricesDouble() {
+        List<Double> prices = new ArrayList<>();
+        for (String price: getProductPricesData()) {
+            prices.add(Double.parseDouble(price.replace(',','.')));
+        }
+        return prices;
+    }
+
+    public Boolean verifyPriceSwitcher() {
+        boolean flag = true;
+        for (int i = 0; i < getProductPricesDouble().size()-1; i++) {
+            if(getProductPricesDouble().get(i) > getProductPricesDouble().get(i+1)) {
+                flag = false;
+            }
+        }
+        return flag;
+    }
 
     public String getNumberOfGoods() {
         return getElementText(totalGoods);
@@ -51,10 +95,6 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     private List<WebElement> getProductNames() {
         return driver.findElements(productNames);
-    }
-
-    public List<String> getSwitchersData() {
-        return getElementTexts(switchers);
     }
 
     public List<String> getProductNamesData() {
@@ -100,6 +140,10 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     public Boolean notFoundTitleIsDisplayed() {
         return driver.findElement(notFoundTitle).isDisplayed();
+    }
+
+    public String getTotalUsedFilters() {
+        return getElementText(totalUsedFilters);
     }
 
 }

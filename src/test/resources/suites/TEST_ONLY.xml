@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="searchpage.NotCorrectSearchTests"/>
+            <class name="filters.PriceFilterTest"/>
         </classes>
     </test>
 </suite>

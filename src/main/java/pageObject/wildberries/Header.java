@@ -14,42 +14,48 @@ public class Header extends BaseWBPage<Header> {
     private final By navigationBtn = By.xpath("//button[@data-tag=\"catalogBtn\"]");
     private final By deliveryBtn = By.xpath("(//a[@class=\"user-menu__btn\"])[1]");
     private final By favouritesBtn = By.xpath("(//a[@class=\"user-menu__btn\"])[3]");
+    private final By entranceBtn = By.xpath("(//a[@class=\"user-menu__btn\"])[3]");
     private final By itemsNumberInBasket = By.xpath("//*[@class=\"user-menu__badge\"]");
 
     public Header open() {
         navigateTo(PropertyReader.getProperties().getProperty("url"));
-        return this;
+        return me();
     }
 
     public Header open(String url) {
         navigateTo(url);
-        return this;
+        return me();
     }
 
     public Header enterSearch(String text) {
         sendKeys(searchField,text);
-        return this;
+        return me();
     }
 
     public Header search(String searchText) {
         enter(searchField, searchText, Keys.ENTER);
-        return this;
+        return me();
+    }
+
+    public Header entrance() {
+        click(entranceBtn);
+        return me();
     }
 
     public Header moveToShoppingCard() {
         scrollToElement(shoppingCard);
         click(shoppingCard);
-        return this;
+        return me();
     }
 
     public Header openNavigationBar() {
         click(navigationBtn);
-        return this;
+        return me();
     }
 
     public Header uploadImage(String imageName) {
         sendKeys(searchImage, FILE_PATH.concat(imageName));
-        return this;
+        return me();
     }
 
     public String getNumberOfItemsInBasket() {

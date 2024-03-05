@@ -30,7 +30,7 @@ public class NotCorrectSearchTests extends BaseTest {
     public Object[][] getData() {
         return new Object[][]{
                 {"-----"},
-                {"+++++"},
+                {"######"},
                 {",.,.,."},
         };
     }
