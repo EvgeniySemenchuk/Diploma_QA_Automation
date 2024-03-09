@@ -1,4 +1,4 @@
-package searchpage;
+package favorites;
 
 import entities.Product;
 import org.testng.Assert;
@@ -7,10 +7,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObject.baseobject.BaseTest;
 import pageObject.wildberries.Cookies;
+import pageObject.wildberries.FavoritesPage;
 import pageObject.wildberries.Header;
 import pageObject.wildberries.SearchResultPage;
 
-public class NotificationTextTests extends BaseTest {
+public class AddIFavoritesItemTests extends BaseTest {
 
     @BeforeTest
     public void precondition() {
@@ -19,12 +20,20 @@ public class NotificationTextTests extends BaseTest {
     }
 
     @Test(priority = 1, dataProvider = "item")
-    public void notificationTextTest(Product product) {
+    public void addItemToFavoritesTest(Product product, String expectedSize) {
         get(Header.class).search(product);
         get(SearchResultPage.class)
+                .waitUntilPageLoaded()
+                .addToFavorites("Ручки", 3)
+                .waitUntilPageLoaded()
+                .addToFavorites("Ручки", 4)
+                .waitUntilPageLoaded()
+                .addToFavorites("Ручки", 5);
+        get(Header.class).moveToFavorites();
+        get(FavoritesPage.class)
                 .verifyPage()
-                .addToBasket(product, 1);
-        Assert.assertTrue(get(SearchResultPage.class).waitUntilPageLoaded().notificationTextIsDisplayed(), "Notification text is not displayed");
+                .waitUntilPageLoaded();
+        Assert.assertEquals(get(FavoritesPage.class).favoritesBasketSize(), expectedSize, "Wrong favorites basket size");
     }
 
     @DataProvider(name = "item")
@@ -32,13 +41,7 @@ public class NotificationTextTests extends BaseTest {
         return new Object[][]{
                 {new Product() {{
                     setProductName("Ручки");
-                }}},
-                {new Product() {{
-                    setProductName("Карандаш");
-                }}},
-                {new Product() {{
-                    setProductName("Линейка");
-                }}},
+                }}, "3"},
         };
     }
 

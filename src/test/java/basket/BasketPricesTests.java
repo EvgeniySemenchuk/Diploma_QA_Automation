@@ -1,5 +1,6 @@
 package basket;
 
+import entities.Product;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -19,12 +20,12 @@ public class BasketPricesTests extends BaseTest {
     }
 
     @Test(priority = 1, dataProvider = "item")
-    public void addItemTest(String item) {
-        get(Header.class).search(item);
+    public void addItemTest(Product product) {
+        get(Header.class).search(product);
         get(SearchResultPage.class).verifyPage()
-                .addToBasket(item, 1)
-                .addToBasket(item, 2)
-                .addToBasket(item, 3);
+                .addToBasket(product, 1)
+                .addToBasket(product, 2)
+                .addToBasket(product, 3);
         get(Header.class).moveToShoppingCard();
         get(BasketPage.class).waitUntilPageLoaded();
         Assert.assertEquals(get(BasketPage.class).getTotalPriceNum(), get(BasketPage.class).getTotalPriceBySum(), "The real total price doesn't equal to the one displayed on page");
@@ -33,9 +34,15 @@ public class BasketPricesTests extends BaseTest {
     @DataProvider(name = "item")
     public Object[][] getData() {
         return new Object[][]{
-                {"Портфель"},
-                {"Карандаш"},
-                {"Стул"},
+                {new Product() {{
+                    setProductName("Портфель");
+                }}},
+                {new Product() {{
+                    setProductName("Карандаш");
+                }}},
+                {new Product() {{
+                    setProductName("Стул");
+                }}},
         };
     }
 

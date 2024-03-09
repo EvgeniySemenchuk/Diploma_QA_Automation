@@ -21,7 +21,7 @@ public class UploadFilesTests extends BaseTest {
     public void uploadPhotoTest(String image, String result) {
         get(Header.class).uploadImage(image);
         get(SearchResultPage.class).verifyPage();
-        Assert.assertTrue(get(SearchResultPage.class).verifySearch(result), "Uploaded image doesn't equal to search results");
+        Assert.assertTrue(get(SearchResultPage.class).verifyAnyNameSearch(result), "Uploaded image doesn't equal to search results");
     }
 
     @DataProvider(name = "photo")

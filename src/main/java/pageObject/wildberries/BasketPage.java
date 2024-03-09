@@ -1,5 +1,6 @@
 package pageObject.wildberries;
 
+import entities.Product;
 import io.cucumber.java.eo.Do;
 import io.opentelemetry.api.metrics.DoubleUpDownCounterBuilder;
 import org.openqa.selenium.By;
@@ -72,6 +73,14 @@ public class BasketPage extends BaseWBPage<BasketPage> {
         return getProductCard(productName).concat("//ancestor::*[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//*[@data-tag=\"favoriteButton\"]");
     }
 
+    private String getProductSize(String productName, String index) {
+        return getProductCard(productName,index).concat("//ancestor::*[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//*[@class=\"b-params__size\"]");
+    }
+
+    private String getProductSize(String productName) {
+        return getProductCard(productName).concat("//ancestor::*[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//*[@class=\"b-params__size\"]");
+    }
+
     private List<WebElement> getPrices() {
         return driver.findElements(prices);
     }
@@ -98,6 +107,18 @@ public class BasketPage extends BaseWBPage<BasketPage> {
 
     public String getTotalPrice() {
         return getElementText(totalPrice);
+    }
+
+    public String productSize(String productName) {
+        return getElementText(By.xpath(getProductSize(productName)));
+    }
+
+    public String productSize(String productName, String index) {
+        return getElementText(By.xpath(getProductSize(productName, index)));
+    }
+
+    public String productSize(Product product, String index) {
+        return getElementText(By.xpath(getProductSize(product.getProductName(), index)));
     }
 
     public String getTotalPriceNum() {
@@ -128,13 +149,13 @@ public class BasketPage extends BaseWBPage<BasketPage> {
     public BasketPage deleteProduct(String productName) {
         scrollToElement(getDeleteProduct(productName));
         click(getDeleteProduct(productName));
-        return this;
+        return me();
     }
 
     public BasketPage deleteProduct(String productName, Integer index) {
         scrollToElement(getDeleteProduct(productName, index.toString()));
         click(getDeleteProduct(productName, index.toString()));
-        return this;
+        return me();
     }
 
     public String getProductPriceData(String productName) {
@@ -147,32 +168,32 @@ public class BasketPage extends BaseWBPage<BasketPage> {
 
     public BasketPage plusProductQuantity(String productName) {
         click(getQuantityPlus(productName));
-        return this;
+        return me();
     }
 
     public BasketPage plusProductQuantity(String productName, Integer index) {
         click(getQuantityPlus(productName, index.toString()));
-        return this;
+        return me();
     }
 
     public BasketPage minusProductQuantity(String productName) {
         click(getQuantityMinus(productName));
-        return this;
+        return me();
     }
 
     public BasketPage minusProductQuantity(String productName, Integer index) {
         click(getQuantityMinus(productName, index.toString()));
-        return this;
+        return me();
     }
 
     public BasketPage addProductToFavourites(String productName) {
         click(getAddToFavourites(productName));
-        return this;
+        return me();
     }
 
     public BasketPage addProductToFavourites(String productName, Integer index) {
         click(getAddToFavourites(productName,index.toString()));
-        return this;
+        return me();
     }
 
 }

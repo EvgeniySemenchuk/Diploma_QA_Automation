@@ -11,11 +11,11 @@ public class Cookies extends BaseWBPage<Cookies> {
 
     public Cookies acceptCookies() {
         click(acceptCookiesBtn);
-        return this;
+        return me();
     }
 
     public Cookies denyCookies() {
         click(denyCookiesBtn);
-        return this;
+        return me();
     }
 }

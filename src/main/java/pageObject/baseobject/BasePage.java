@@ -148,6 +148,10 @@ public class BasePage {
         clearField(By.xpath(xpath));
     }
 
+    protected void refreshPage() {
+        driver.navigate().refresh();
+    }
+
     protected void waitUntilTextToBe(By by, String expectedText) {
         log.info("Wait until text to be - " + expectedText);
         wait.until(ExpectedConditions.textToBe(by,expectedText));

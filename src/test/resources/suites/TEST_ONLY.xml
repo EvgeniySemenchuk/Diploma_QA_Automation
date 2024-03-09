@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="filters.PriceFilterTest"/>
+            <class name="favorites.AddIFavoritesItemTests"/>
         </classes>
     </test>
 </suite>

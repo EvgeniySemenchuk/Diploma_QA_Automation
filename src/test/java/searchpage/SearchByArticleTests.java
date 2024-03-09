@@ -8,9 +8,10 @@ import org.testng.annotations.Test;
 import pageObject.baseobject.BaseTest;
 import pageObject.wildberries.Cookies;
 import pageObject.wildberries.Header;
+import pageObject.wildberries.ProductPage;
 import pageObject.wildberries.SearchResultPage;
 
-public class NotificationTextTests extends BaseTest {
+public class SearchByArticleTests extends BaseTest {
 
     @BeforeTest
     public void precondition() {
@@ -19,25 +20,32 @@ public class NotificationTextTests extends BaseTest {
     }
 
     @Test(priority = 1, dataProvider = "item")
-    public void notificationTextTest(Product product) {
-        get(Header.class).search(product);
+    public void searchByArticleTest(Product product) {
+        get(Header.class).search(product.getProductName());
         get(SearchResultPage.class)
                 .verifyPage()
-                .addToBasket(product, 1);
-        Assert.assertTrue(get(SearchResultPage.class).waitUntilPageLoaded().notificationTextIsDisplayed(), "Notification text is not displayed");
+                .moveToProduct(product, 1);
+        String productName = get(ProductPage.class).getProductName();
+        get(Header.class)
+                .waitUntilPageLoaded()
+                .search(get(ProductPage.class).getArticleNumber());
+        Assert.assertEquals(get(ProductPage.class).getProductName(), productName, "search by article works incorrectly");
+        get(Header.class).backToMainPage();
     }
+
+
 
     @DataProvider(name = "item")
     public Object[][] getData() {
         return new Object[][]{
                 {new Product() {{
-                    setProductName("Ручки");
+                    setProductName("Спеши любить");
                 }}},
                 {new Product() {{
-                    setProductName("Карандаш");
+                    setProductName("Лучшее во мне");
                 }}},
                 {new Product() {{
-                    setProductName("Линейка");
+                    setProductName("Мастер и Маргарита");
                 }}},
         };
     }

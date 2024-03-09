@@ -1,6 +1,6 @@
 package filters;
 
-import io.cucumber.java.sl.In;
+import entities.Product;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -10,8 +10,9 @@ import pageObject.wildberries.Cookies;
 import pageObject.wildberries.Filters;
 import pageObject.wildberries.Header;
 import pageObject.wildberries.SearchResultPage;
+import testngUtils.Retry;
 
-public class PriceFilterTest extends BaseTest {
+public class BrandFilterTest extends BaseTest {
 
     @BeforeTest
     public void precondition() {
@@ -19,31 +20,31 @@ public class PriceFilterTest extends BaseTest {
         get(Cookies.class).denyCookies();
     }
 
-    @Test(priority = 1, dataProvider = "priceFilter")
-    public void defectPriceFilterTest(String itemName, Integer priceFrom, Integer priceTo) {
-        get(Header.class).search(itemName);
+    @Test(priority = 1, dataProvider = "brandFilter")
+    public void brandFilterTest(Product product) {
+        get(Header.class).search(product);
         get(SearchResultPage.class)
                 .verifyPage()
                 .openFilters();
         get(Filters.class)
                 .verifyPage()
-                .priceFrom(priceFrom.toString())
-                .waitUntilPageLoaded()
-                .priceTo(priceTo.toString())
+                .selectBrand(product)
                 .close();
         get(SearchResultPage.class)
                 .verifyPage()
                 .waitUntilPageLoaded();
-        Assert.assertTrue(get(SearchResultPage.class).getProductPricesDouble().stream()
-               .allMatch(price -> (price >= priceFrom && price <= priceTo)), "Price filter works incorrectly");
+        Assert.assertEquals(get(SearchResultPage.class).getTotalUsedFilters(), "1", "Wrong filter number");
+        Assert.assertTrue(get(SearchResultPage.class).verifyAllBrandSearch(product.getProductBrand()), "Brand filter works incorrectly");
     }
 
-    @DataProvider(name = "priceFilter")
+    @DataProvider(name = "brandFilter")
     public Object[][] getData() {
         return new Object[][]{
-                {"Штаны", 130 ,200},
+                {new Product() {{
+                    setProductName("Ручки");
+                    setProductBrand("Brauberg");
+                }}},
         };
     }
-
 
 }

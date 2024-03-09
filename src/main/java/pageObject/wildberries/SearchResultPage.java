@@ -1,6 +1,8 @@
 package pageObject.wildberries;
 
+import entities.Product;
 import io.cucumber.java.eo.Do;
+import io.cucumber.java.eo.Se;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +19,7 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
     private final By backBtn = By.xpath("//a[@data-tag=\"goMain\"]");
     private final By scrollUpBtn = By.xpath("//*[contains(@class,\"scroll-top\")]");
     private final By productNames = By.xpath("//*[@class=\"product-card__name\"]");
+    private final By productBrands = By.xpath("//*[@class=\"product-card__brand\"]");
     private final By notification = By.id("wbx-notification");
     private final By notFoundTitle = By.xpath("//*[@class=\"page-not-found__title\"]");
     private final By productPrices = By.xpath("//*[@data-tag=\"salePrice\"]");
@@ -55,8 +58,9 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     public Boolean verifyPriceSwitcher() {
         boolean flag = true;
-        for (int i = 0; i < getProductPricesDouble().size()-1; i++) {
-            if(getProductPricesDouble().get(i) > getProductPricesDouble().get(i+1)) {
+        List<Double> prices = getProductPricesDouble();
+        for (int i = 0; i < prices.size()-1; i++) {
+            if(prices.get(i) > prices.get(i+1)) {
                 flag = false;
             }
         }
@@ -65,6 +69,11 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     public String getNumberOfGoods() {
         return getElementText(totalGoods);
+    }
+
+    public SearchResultPage refresh() {
+        refreshPage();
+        return me();
     }
 
     public String getSearchResult() {
@@ -85,6 +94,10 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
         return getProductCard(productName, index).concat("//*[@data-tag=\"basketBtn\"]");
     }
 
+    private String getAddToFavorites(String productName, String index) {
+        return getProductCard(productName,index).concat("//*[@data-tag=\"favouritesBtn\"]");
+    }
+
     private String getAddToBasket(String index) {
         return "(//div[@class=\"product-snippet\"]//*[@data-tag=\"basketBtn\"])[" + index + "]";
     }
@@ -97,41 +110,68 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
         return driver.findElements(productNames);
     }
 
+    private List<WebElement> getProductBrands() {
+        return driver.findElements(productBrands);
+    }
+
+    public List<String> getProductBrandsData() { return getElementTexts(getProductBrands());}
+
     public List<String> getProductNamesData() {
         return getElementTexts(getProductNames());
+    }
+
+    public SearchResultPage addToFavorites(String productName, Integer productIndex) {
+        click(getAddToFavorites(productName,productIndex.toString()));
+        return me();
     }
 
     public SearchResultPage addToBasket(String productName, Integer productIndex) {
         waitUntilElementBeVisible(By.xpath(getAddToBasket(productName, productIndex.toString())));
         scrollToElement(getAddToBasket(productName, productIndex.toString()));
         click(getAddToBasket(productName, productIndex.toString()));
-        return this;
+        return me();
+    }
+
+    public SearchResultPage addToBasket(Product product, Integer productIndex) {
+        waitUntilElementBeVisible(By.xpath(getAddToBasket(product.getProductName(), productIndex.toString())));
+        scrollToElement(getAddToBasket(product.getProductName(), productIndex.toString()));
+        click(getAddToBasket(product.getProductName(), productIndex.toString()));
+        return me();
     }
 
     public SearchResultPage addToBasket(Integer productIndex) {
         scrollToElement(getAddToBasket(productIndex.toString()));
         click(getAddToBasket(productIndex.toString()));
-        return this;
+        return me();
     }
 
     public SearchResultPage moveToProduct(String productName, Integer productIndex) {
         click(getMoveToProduct(productName, productIndex.toString()));
-        return this;
+        return me();
+    }
+
+    public SearchResultPage moveToProduct(Product product, Integer productIndex) {
+        click(getMoveToProduct(product.getProductName(), productIndex.toString()));
+        return me();
     }
 
     public SearchResultPage backToMainPage() {
         click(backBtn);
-        return this;
+        return me();
     }
 
     public SearchResultPage scrollUp() {
         waitUntilElementToBeClickable(scrollUpBtn);
         click(scrollUpBtn);
-        return this;
+        return me();
     }
 
-    public Boolean verifySearch(String search) {
+    public Boolean verifyAnyNameSearch(String search) {
         return getProductNamesData().stream().anyMatch(el -> el.contains(search));
+    }
+
+    public Boolean verifyAllBrandSearch(String brand) {
+        return getProductBrandsData().stream().allMatch(el->el.toLowerCase().contains(brand.toLowerCase()));
     }
 
     public Boolean notificationTextIsDisplayed() {
@@ -140,6 +180,10 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     public Boolean notFoundTitleIsDisplayed() {
         return driver.findElement(notFoundTitle).isDisplayed();
+    }
+
+    public Boolean searchResultIsDisplayed() {
+        return driver.findElement(searchResult).isDisplayed();
     }
 
     public String getTotalUsedFilters() {

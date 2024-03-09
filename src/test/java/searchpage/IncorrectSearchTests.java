@@ -5,12 +5,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObject.baseobject.BaseTest;
-import pageObject.wildberries.BaseWBPage;
 import pageObject.wildberries.Cookies;
 import pageObject.wildberries.Header;
 import pageObject.wildberries.SearchResultPage;
 
-public class NotCorrectSearchTests extends BaseTest {
+public class IncorrectSearchTests extends BaseTest {
 
     @BeforeTest
     public void precondition() {
@@ -22,7 +21,7 @@ public class NotCorrectSearchTests extends BaseTest {
     public void notCorrectSearchTest(String searchText) {
         get(Header.class).search(searchText);
         get(SearchResultPage.class).waitUntilPageLoaded();
-        Assert.assertEquals(get(SearchResultPage.class).getSearchResult(), searchText, "Wrong searhc result");
+        Assert.assertEquals(get(SearchResultPage.class).getSearchResult(), searchText, "Wrong search result");
         Assert.assertTrue(get(SearchResultPage.class).notFoundTitleIsDisplayed(), "Not found title doesn't display");
     }
 
