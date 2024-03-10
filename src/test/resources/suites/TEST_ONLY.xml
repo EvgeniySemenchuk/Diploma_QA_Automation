@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="favorites.AddIFavoritesItemTests"/>
+            <class name="basket.AddNumberOfItemsTests"/>
         </classes>
     </test>
 </suite>

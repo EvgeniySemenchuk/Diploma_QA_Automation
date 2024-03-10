@@ -25,6 +25,7 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
     private final By productPrices = By.xpath("//*[@data-tag=\"salePrice\"]");
     private final By filtersBtn = By.xpath("//button[@data-text=\"strFilters\"]");
     private final By totalUsedFilters = By.xpath("//span[@data-tag=\"totalDesktop\"]");
+    private final By naviCategory = By.xpath("//*[@class=\"breadcrumbs\"]//li[@class=\"breadcrumb-item has-sub-menu\"]");
 
     private String getSwitcher(String switcher) {
         return "//*[@class=\"switcher\"]//button[contains(text(), \"" + switcher.toLowerCase() + "\")]";
@@ -118,6 +119,10 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
 
     public List<String> getProductNamesData() {
         return getElementTexts(getProductNames());
+    }
+
+    public List<String> getNaviCategory() {
+        return getElementTexts(naviCategory);
     }
 
     public SearchResultPage addToFavorites(String productName, Integer productIndex) {
