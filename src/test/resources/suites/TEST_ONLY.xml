@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="basket.AddNumberOfItemsTests"/>
+            <class name="apitests.ApiTests"/>
         </classes>
     </test>
 </suite>
