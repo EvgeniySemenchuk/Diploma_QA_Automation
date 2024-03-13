@@ -10,17 +10,17 @@ pipeline {
         }
         stage('Run tests') {
             agent {
-                dockerfile {
+                docker {
+                    image {'markhobson/maven-chrome:jdk-11'}
                     reuseNode true
-                    args '-u root'
                 }
             }
             steps {
-                 powershell 'mvn clean test -Dsuite=%SUITE% -Dconfig=%CONFIG%'
+                sh 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
             }
             post('Allure results') {
                   always {
-                        powershell 'chown -R 1003:1003 ./target/allure-results'
+                        sh 'chown -R 1003:1003 ./target/allure-results'
                         archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
                         archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
                   }
