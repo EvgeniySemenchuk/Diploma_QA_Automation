@@ -16,11 +16,11 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
+                 powershell 'mvn clean test -Dsuite=%SUITE% -Dconfig=%CONFIG%'
             }
             post('Allure results') {
                   always {
-                        sh 'chown -R 1003:1003 ./target/allure-results'
+                        powershell 'chown -R 1003:1003 ./target/allure-results'
                         archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
                         archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
                   }
