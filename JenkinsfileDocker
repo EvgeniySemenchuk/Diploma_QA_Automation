@@ -11,7 +11,7 @@ pipeline {
         stage('Run tests') {
             agent {
                 docker {
-                    image {'markhobson/maven-chrome:jdk-11'}
+                    image 'markhobson/maven-chrome:jdk-11'
                     reuseNode true
                 }
             }
