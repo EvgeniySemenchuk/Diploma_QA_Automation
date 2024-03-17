@@ -10,13 +10,13 @@ pipeline {
         }
         stage('Run tests') {
             agent {
-                docker {
-                    image 'markhobson/maven-chrome:jdk-11'
+                dockerfile {
+                    reuseNode true
                     args '-u root'
                 }
             }
             steps {
-                sh 'mvn clean test -Dsuite=%SUITE% -Dconfig=%CONFIG%'
+                sh 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
             }
             post('Allure results') {
                   always {
