@@ -1,11 +1,14 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_WORKSPACE = "${WORKSPACE}".replaceAll("\\\\", "/") // Преобразуем обратные слеши в прямые
+    }
     stages {
         stage('Project build') {
             steps {
-                 cleanWs()
-                 checkout scm
-                 echo 'Building #${env.JOB_NAME}...'
+                cleanWs()
+                checkout scm
+                echo 'Building #${env.JOB_NAME}...'
             }
         }
         stage('Run tests') {
@@ -16,28 +19,24 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
+                sh "mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}"
             }
-            post('Allure results') {
-                  always {
-                        sh 'chown -R 1003:1003 ./target/allure-results'
-                        archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
-                        archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
-                  }
+            post {
+                always {
+                    script {
+                        sh "docker exec -u root -w ${DOCKER_WORKSPACE} <your_container_id> chown -R 1003:1003 ./target/allure-results"
+                        archiveArtifacts artifacts: '${DOCKER_WORKSPACE}/target/allure-results/*', allowEmptyArchive: true
+                        archiveArtifacts artifacts: '${DOCKER_WORKSPACE}/target/logs/*', allowEmptyArchive: true
+                        allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: '${DOCKER_WORKSPACE}/target/allure-results']]
+                        ])
+                    }
+                }
             }
         }
     }
-      post {
-                    always {
-                            script {
-                                allure([
-                                        includeProperties: false,
-                                        jdk: '',
-                                        properties: [],
-                                        reportBuildPolicy: 'ALWAYS',
-                                        results: [[path: 'target/allure-results']]
-                                ])
-                            }
-                    }
-          }
 }
