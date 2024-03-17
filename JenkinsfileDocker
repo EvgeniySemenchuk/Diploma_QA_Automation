@@ -16,7 +16,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
+                sh 'mvn clean test -Dsuite=%SUITE% -Dconfig=%CONFIG%'
             }
             post('Allure results') {
                   always {
