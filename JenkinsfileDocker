@@ -20,7 +20,7 @@ pipeline {
             }
             post('Allure results') {
                   always {
-                       sh "chown -R 1003:1003 ${WORKSPACE}/target/allure-results"
+                        sh 'chown -R 1003:1003 ./target/allure-results'
                         archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
                         archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
                   }
