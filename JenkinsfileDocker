@@ -12,27 +12,26 @@ pipeline {
             }
         }
         stage('Run tests') {
-            agent {
-                dockerfile {
-                    reuseNode true
-                    args '-u root'
-                }
-            }
+            agent any
             steps {
-                sh "mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}"
+                script {
+                    docker.build("markhobson/maven-chrome:jdk-11")
+                    docker.image("markhobson/maven-chrome:jdk-11").inside("-u root -w ${DOCKER_WORKSPACE}") {
+                        sh "mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}"
+                    }
+                }
             }
             post {
                 always {
                     script {
-                        sh "docker exec -u root -w ${DOCKER_WORKSPACE} <your_container_id> chown -R 1003:1003 ./target/allure-results"
-                        archiveArtifacts artifacts: '${DOCKER_WORKSPACE}/target/allure-results/*', allowEmptyArchive: true
-                        archiveArtifacts artifacts: '${DOCKER_WORKSPACE}/target/logs/*', allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
                         allure([
                             includeProperties: false,
                             jdk: '',
                             properties: [],
                             reportBuildPolicy: 'ALWAYS',
-                            results: [[path: '${DOCKER_WORKSPACE}/target/allure-results']]
+                            results: [[path: 'target/allure-results']]
                         ])
                     }
                 }
