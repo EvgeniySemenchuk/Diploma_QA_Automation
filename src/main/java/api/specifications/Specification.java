@@ -16,6 +16,13 @@ public class Specification {
                 .build();
     }
 
+    public static RequestSpecification requestSpecMultiPart(String url) {
+        return new RequestSpecBuilder()
+                .setBaseUri(url)
+                .setContentType(ContentType.MULTIPART)
+                .build();
+    }
+
     public static ResponseSpecification responseSpecOK200() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)
@@ -38,6 +45,8 @@ public class Specification {
         RestAssured.requestSpecification = request;
         RestAssured.responseSpecification = response;
     }
+
+
 
 }
 

@@ -18,4 +18,5 @@ public class Cookies extends BaseWBPage<Cookies> {
         click(denyCookiesBtn);
         return me();
     }
+
 }

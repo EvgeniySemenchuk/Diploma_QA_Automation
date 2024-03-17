@@ -17,6 +17,7 @@ public class BasketPage extends BaseWBPage<BasketPage> {
     private final By basketSize = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]");
     private final By prices = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//div[@data-tag=\"salePrice\"]");
     private final By itemNames = By.xpath("//div[@class=\"b-item\" or @class=\"b-item is-no-discount\"]//*[@data-tag=\"itemName\"]");
+    private final By emptyBasketText = By.xpath("//*[@class=\"page-not-found__title\"]");
 
     public BasketPage verifyPage() {
         waitUntilElementBeVisible(productCount);
@@ -119,6 +120,10 @@ public class BasketPage extends BaseWBPage<BasketPage> {
 
     public String productSize(Product product, String index) {
         return getElementText(By.xpath(getProductSize(product.getProductName(), index)));
+    }
+
+    public Boolean basketIsEmplty() {
+        return driver.findElement(emptyBasketText).isDisplayed();
     }
 
     public String getTotalPriceNum() {

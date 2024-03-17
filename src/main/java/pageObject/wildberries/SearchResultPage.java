@@ -130,6 +130,12 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
         return me();
     }
 
+    public SearchResultPage addToFavorites(Product product, Integer productIndex) {
+        click(getAddToFavorites(product.getProductName(),productIndex.toString()));
+        return me();
+    }
+
+
     public SearchResultPage addToBasket(String productName, Integer productIndex) {
         waitUntilElementBeVisible(By.xpath(getAddToBasket(productName, productIndex.toString())));
         scrollToElement(getAddToBasket(productName, productIndex.toString()));

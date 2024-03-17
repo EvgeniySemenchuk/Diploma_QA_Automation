@@ -1,19 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Regression wb">
-    <test name="1">
+    <test name="basket test - add items">
         <classes>
-            <class name="searchpage.SearchByArticleTests"/>
+            <class name="basket.AddNumberOfItemsTests"/>
         </classes>
     </test>
-    <test name="2">
+    <test name="basket test - add and delete items">
+        <classes>
+            <class name="basket.AddAndDeleteItemsTests"/>
+        </classes>
+    </test>
+    <test name="basket test - basket price">
         <classes>
             <class name="basket.BasketPricesTests"/>
         </classes>
     </test>
-    <test name="3">
+    <test name="diagog window test">
+        <classes>
+            <class name="dialogWindow.DialogWindowTests"/>
+        </classes>
+    </test>
+    <test name="entrance test - boundare test">
         <classes>
             <class name="entrance.BoundaryValueTests"/>
+        </classes>
+    </test>
+    <test name="favourites test - add to favouites">
+        <classes>
+            <class name="favorites.AddIFavoritesItemTests"/>
+        </classes>
+    </test>
+    <test name="filters test - brand filter test">
+        <classes>
+            <class name="filters.BrandFilterTest"/>
+        </classes>
+    </test>
+    <test name="filters test - price filter test">
+        <classes>
+            <class name="filters.PriceFilterTest"/>
+        </classes>
+    </test>
+    <test name="navigation bar test">
+        <classes>
+            <class name="navigationbar.NavigationBarTests"/>
+        </classes>
+    </test>
+    <test name="pop up test">
+        <classes>
+            <class name="popup.PopUpTests"/>
+        </classes>
+    </test>
+    <test name="search test - data exceeding limit search">
+        <classes>
+            <class name="searchpage.DataExceedingLimitTests"/>
+        </classes>
+    </test>
+    <test name="search test - incorrect search">
+        <classes>
+            <class name="searchpage.IncorrectSearchTests"/>
+        </classes>
+    </test>
+    <test name="search test - notification text">
+        <classes>
+            <class name="searchpage.NotificationTextTests"/>
+        </classes>
+    </test>
+    <test name="search test - search by article">
+        <classes>
+            <class name="searchpage.SearchByArticleTests"/>
+        </classes>
+    </test>
+    <test name="search test - switchers test">
+        <classes>
+            <class name="searchpage.SwitchersTests"/>
+        </classes>
+    </test>
+    <test name="upload file search - switchers test">
+        <classes>
+            <class name="uploadFiles.UploadFilesTests"/>
+        </classes>
+    </test>
+    <test name="api get tests">
+        <classes>
+            <class name="apitests.get.ApiGetTests"/>
+        </classes>
+    </test>
+    <test name="api post tests">
+        <classes>
+            <class name="apitests.post.ApiPostTests"/>
         </classes>
     </test>
 </suite>
