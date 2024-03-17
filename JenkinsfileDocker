@@ -18,22 +18,26 @@ pipeline {
             steps {
                 sh 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
             }
-            post {
-                always {
-                    sh 'chown -R 1003:1003 ./target/allure-results'
-                    archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
-                    archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
-                    script {
-                        allure([
-                            includeProperties: false,
-                            jdk: '',
-                            properties: [],
-                            reportBuildPolicy: 'ALWAYS',
-                            results: [[path: 'target/allure-results']]
-                        ])
-                    }
-                }
+            post('Allure results') {
+                  always {
+                       sh "chown -R 1003:1003 ${WORKSPACE}/target/allure-results"
+                        archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
+                  }
             }
         }
     }
+      post {
+                    always {
+                            script {
+                                allure([
+                                        includeProperties: false,
+                                        jdk: '',
+                                        properties: [],
+                                        reportBuildPolicy: 'ALWAYS',
+                                        results: [[path: 'target/allure-results']]
+                                ])
+                            }
+                    }
+          }
 }
