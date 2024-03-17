@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="smokeflowtests.UserFlowTests"/>
+            <class name="apitests.post.ApiPostTests"/>
         </classes>
     </test>
 </suite>

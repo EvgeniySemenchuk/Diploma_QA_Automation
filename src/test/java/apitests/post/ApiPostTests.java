@@ -27,7 +27,7 @@ public class ApiPostTests {
     private final static String BASKET_URL = "https://card.wb.ru";
 
     @Test()
-    public void productPOSTTest() throws InterruptedException {
+    public void productPOSTTest() {
         File uploadImage = new File("src/test/resources/files/socks.png");
         Response response = given()
                 .baseUri(IMAGE_DOWNLOAD_URL)
@@ -48,7 +48,6 @@ public class ApiPostTests {
                 .multiPart("image", uploadImage)
                 .post();
         response.prettyPrint();
-
     }
 
 }

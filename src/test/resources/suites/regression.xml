@@ -31,6 +31,11 @@
             <class name="favorites.AddIFavoritesItemTests"/>
         </classes>
     </test>
+    <test name="navigation bar test">
+        <classes>
+            <class name="navigationbar.NavigationBarTests"/>
+        </classes>
+    </test>
     <test name="filters test - brand filter test">
         <classes>
             <class name="filters.BrandFilterTest"/>
@@ -41,14 +46,14 @@
             <class name="filters.PriceFilterTest"/>
         </classes>
     </test>
-    <test name="navigation bar test">
-        <classes>
-            <class name="navigationbar.NavigationBarTests"/>
-        </classes>
-    </test>
     <test name="pop up test">
         <classes>
             <class name="popup.PopUpTests"/>
+        </classes>
+    </test>
+    <test name="upload file search - switchers test">
+        <classes>
+            <class name="uploadFiles.UploadFilesTests"/>
         </classes>
     </test>
     <test name="search test - data exceeding limit search">
@@ -74,11 +79,6 @@
     <test name="search test - switchers test">
         <classes>
             <class name="searchpage.SwitchersTests"/>
-        </classes>
-    </test>
-    <test name="upload file search - switchers test">
-        <classes>
-            <class name="uploadFiles.UploadFilesTests"/>
         </classes>
     </test>
     <test name="api get tests">

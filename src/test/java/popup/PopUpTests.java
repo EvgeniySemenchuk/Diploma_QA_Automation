@@ -45,10 +45,11 @@ public class PopUpTests extends BaseTest {
                 .verifyPage()
                 .addToBasket(product, 6)
                 .waitUntilPageLoaded();
-        get(PopUpPage.class).chooseSize(product);
+        String size = get(PopUpPage.class).getSizesData().get(0);
+        get(PopUpPage.class).chooseSize(size);
         get(Header.class).moveToShoppingCard();
         get(BasketPage.class).waitUntilPageLoaded();
-        Assert.assertEquals(get(BasketPage.class).productSize(product, "1"), product.getProductSize(), "Size on basket doesn't equal to chosen one before");
+        Assert.assertEquals(get(BasketPage.class).productSize(product, "1"), size, "Size on basket doesn't equal to chosen one before");
     }
 
 
@@ -57,7 +58,6 @@ public class PopUpTests extends BaseTest {
         return new Object[][]{
                 {new Product() {{
                     setProductName("Кроссовки");
-                    setProductSize("40");
                 }}, "2" },
         };
     }

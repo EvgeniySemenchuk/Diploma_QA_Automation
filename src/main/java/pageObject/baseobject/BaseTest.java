@@ -4,6 +4,7 @@ import driver.DriverTypes;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
+import testngUtils.InvokedListener;
 import testngUtils.SimpleListener;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +13,7 @@ import static driver.DriverCreation.*;
 import static driver.DriverTypes.CHROME;
 import static propertyUtils.PropertyReader.*;
 
-@Listeners(SimpleListener.class)
+@Listeners({SimpleListener.class, InvokedListener.class})
 public abstract class BaseTest {
 
     @BeforeTest
