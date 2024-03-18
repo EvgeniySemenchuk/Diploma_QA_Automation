@@ -19,7 +19,7 @@ public class ApiGetTests {
     private static final String SEARCH_TAGS_URL = "https://similar-queries.wildberries.ru";
     private static final String SEARCH_WB = "https://search.wb.ru";
 
-    @Test()
+    @Test(priority = 1)
     public void productGETTest() {
         Specification.installSpecification(Specification.requestSpec(SEARCH_WB), Specification.responseSpecUnique(200));
         Response response = given()
@@ -36,7 +36,7 @@ public class ApiGetTests {
         Assert.assertEquals(products.size(), 100);
     }
 
-    @Test()
+    @Test(priority = 2)
     public void priceSortGETTest() {
         Specification.installSpecification(Specification.requestSpec(SEARCH_WB), Specification.responseSpecUnique(200));
         Response response = given()
@@ -54,7 +54,7 @@ public class ApiGetTests {
         Assert.assertEquals(prices, sortedPrices);
     }
 
-    @Test()
+    @Test(priority = 3)
     public void searchTagsGETTest() {
         Specification.installSpecification(Specification.requestSpec(SEARCH_TAGS_URL), Specification.responseSpecUnique(200));
         Response response = given()
