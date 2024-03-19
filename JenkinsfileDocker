@@ -11,17 +11,16 @@ pipeline {
         stage('Run tests') {
             agent {
                 dockerfile {
-                    dir 'C://ProgramData//Jenkins//.jenkins//workspace//QA_TSM_Diploma'
                     reuseNode true
                     args '-u root'
                 }
             }
             steps {
-                powershell 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
+                bat 'mvn clean test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
             }
             post('Allure results') {
                   always {
-                        powershell 'chown -R 1003:1003 ./target/allure-results'
+                        bat 'chown -R 1003:1003 ./target/allure-results'
                         archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
                         archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
                   }
