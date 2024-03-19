@@ -1,43 +1,48 @@
 pipeline {
-agent any
+    agent any
+
     stages {
-     stage('Project build') {
+        stage('Cleanup Workspace') {
             steps {
-                 cleanWs()
-                 checkout scm
-                 echo 'Building #${env.JOB_NAME}...'
+                cleanWs()
             }
-             }
-        stage('Run tests') {
-        agent {
-              dockerfile {
-              reuseNode true
-               args '-u root'
-               }
-            }
+        }
+
+        stage('Checkout') {
             steps {
-                bat 'mvn clean test -Dsuite="${SUITE}" -Dconfig="${CONFIG}"'
+                checkout scm
             }
-             post('Allure results') {
-                              always {
-                                    bat 'chown -R 1003:1003 ./target/allure-results'
-                                    archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
-                                    archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
-                              }
-                        }
-                    }
+        }
+
+        stage('Build Docker Image') {
+            agent {
+                dockerfile {
+                    reuseNode true
+                    args '-u root'
                 }
-    post {
-                      always {
-                              script {
-                                  allure([
-                                          includeProperties: false,
-                                          jdk: '',
-                                          properties: [],
-                                          reportBuildPolicy: 'ALWAYS',
-                                          results: [[path: 'target/allure-results']]
-                                  ])
-                              }
-                      }
             }
-  }
+            steps {
+                bat 'mvn clean test -Dconfig="${env.CONFIG}" -DsuiteXml="${env.SUITE}"'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'target/allure-results/*', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'target/logs/*', allowEmptyArchive: true
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Publish Allure reports
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]
+            ])
+        }
+    }
+}
