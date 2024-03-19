@@ -5,7 +5,7 @@ pipeline {
             steps {
                  cleanWs()
                  checkout scm
-                 bat "xcopy \"${env.WORKSPACE}\" \"C:/Jenkins/workspace/QA_TSM_Diploma/\" /s /e /h /k /
+                 bat "xcopy \"${env.WORKSPACE}\" \"C:/Jenkins/workspace/QA_TSM_Diploma/\" /s /e /h /k /y
                  echo 'Building #${env.JOB_NAME}...'
             }
         }
