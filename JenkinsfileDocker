@@ -22,7 +22,7 @@ pipeline {
                 }
             }
             steps {
-                bat 'mvn clean test -Dconfig="${env.CONFIG}" -DsuiteXml="${env.SUITE}"'
+                powershell 'mvn clean test -Dconfig="${env.CONFIG}" -DsuiteXml="${env.SUITE}"'
             }
             post {
                 always {
