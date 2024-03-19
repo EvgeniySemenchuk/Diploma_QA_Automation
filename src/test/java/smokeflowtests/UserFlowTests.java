@@ -57,7 +57,7 @@ public class UserFlowTests extends BaseTest {
         get(BasketPage.class)
                 .waitUntilPageLoaded();
         for (int i = 0; i < 3; i++) {
-            get(BasketPage.class).plusProductQuantity("", 1);
+            get(BasketPage.class).waitUntilPageLoaded().plusProductQuantity("", 1);
             Assert.assertEquals(get(BasketPage.class).getTotalPriceNum(), get(BasketPage.class).getTotalPriceBySum(), "The real total price doesn't equal to the one displayed on page");
         }
     }
