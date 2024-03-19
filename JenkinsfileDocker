@@ -5,7 +5,7 @@ pipeline {
             steps {
                  cleanWs()
                  checkout scm
-                  bat "xcopy \"${env.WORKSPACE}\" \"C:\ProgramData\Jenkins\.jenkins\workspace\QA_TSM_Diploma" /s /e /h /k /y"
+                 bat "xcopy \"${env.WORKSPACE}\" \"C:/Jenkins/workspace/QA_TSM_Diploma/\" /s /e /h /k /
                  echo 'Building #${env.JOB_NAME}...'
             }
         }
@@ -13,7 +13,7 @@ pipeline {
             agent {
                 dockerfile {
                     reuseNode true
-                    args '-u root'
+                    args '-u root -w C:/Jenkins/workspace/QA_TSM_Diploma/'
                 }
             }
             steps {
