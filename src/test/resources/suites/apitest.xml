@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="api tests of wildberries">
+    <test name="get method tests">
+        <classes>
+            <class name="apitests.get.ApiGetTests"/>
+        </classes>
+    </test>
+    <test name="post method tests">
+        <classes>
+            <class name="apitests.post.ApiPostTests"/>
+        </classes>
+    </test>
+</suite>
