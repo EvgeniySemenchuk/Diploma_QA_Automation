@@ -11,7 +11,7 @@ pipeline {
         stage('Run tests') {
             agent {
                 dockerfile {
-                    dir 'C:\ProgramData\Jenkins\.jenkins\workspace\QA_TSM_Diploma'
+                    dir 'C:/ProgramData/Jenkins/.jenkins/workspace/QA_TSM_Diploma'
                     reuseNode true
                     args '-u root'
                 }
