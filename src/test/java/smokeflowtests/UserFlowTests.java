@@ -102,7 +102,6 @@ public class UserFlowTests extends BaseTest {
                 {new Product() {{
                     setProductName("Стол");
                 }}},
-
         };
     }
 

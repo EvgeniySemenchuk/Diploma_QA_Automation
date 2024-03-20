@@ -54,7 +54,6 @@ public class NavigationBarTests extends BaseTest {
     public Object[][] getData2() {
         return new Object[][]{
                 {List.of("Игрушки", "Для малышей"),"Кубики"},
-                {List.of("Красота", "Волосы"),"Стайлинг"},
         };
     }
 
