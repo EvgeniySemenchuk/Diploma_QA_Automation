@@ -27,7 +27,7 @@ mvn install
 ```
 **Запусить определенный набор тестов**
 
-Доступные наборы тестов: regression, userflow, apitest (чек-листы для них находятся по ссылку снизу)
+Доступные наборы тестов: regression, userflow, apitest (чек-листы для них находятся по ссылке снизу)
 ```
 mvn clean -Dsuite="набор тестов" -Dconfig=wildberries test
 ```
