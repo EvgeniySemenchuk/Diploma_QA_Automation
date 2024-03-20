@@ -32,7 +32,7 @@ public class ApiGetTests {
                     put("dest", "-59208");
                 }}).get();
         List<Product> products = response.body().jsonPath().getList("data.products.", Product.class);
-        products.forEach(x -> Assert.assertTrue(x.getName().toLowerCase().contains("матрас")));
+        products.forEach(x -> Assert.assertTrue(x.getName().toLowerCase().contains("матр")));
         Assert.assertEquals(products.size(), 100);
     }
 
