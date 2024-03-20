@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObject.baseobject.BaseTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +28,13 @@ public class ApiGetTests {
                 .params(new HashMap<>() {{
                     put("query", "матрас");
                     put("resultset", "catalog");
-                    put("limit", "100");
+                    put("limit", "20");
                     put("sort", "popular");
                     put("dest", "-59208");
                 }}).get();
         List<Product> products = response.body().jsonPath().getList("data.products.", Product.class);
         products.forEach(x -> Assert.assertTrue(x.getName().toLowerCase().contains("матр")));
-        Assert.assertEquals(products.size(), 100);
+        Assert.assertEquals(products.size(), 20);
     }
 
     @Test(priority = 2)
