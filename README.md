@@ -1,5 +1,5 @@
 # Дипломный проект - автоматизация тестирования для wildberries.by
-Данный проект содержит реализиацию фреймоворка для тестирования wildberries.by.
+Данный проект содержит реализиацию фреймоорка для тестирования wildberries.by.
 ### Используемый стек технологий:
 1. Язык программирования - **Java**, версии 11
 2. **Selenium** - библиотека для взаимодействия с веб-браузером
@@ -17,31 +17,31 @@
 4. Запустить тесты с помощью следующей команды
 
 ### Основные команды для работы с проектом
-Клонировать проект
+**Клонировать проект**
 ```
 git clone "reposiroty_url"
 ```
-Собрать проект
+**Собрать проект**
 ```
 mvn install
 ```
-Запусить определенный набор тестов
+**Запусить определенный набор тестов**
 
 Доступные наборы тестов: regression, userflow, apitest (чек-листы для них находятся по ссылку снизу)
 ```
 mvn clean -Dsuite="набор тестов" -Dconfig=wildberries test
 ```
-Достать отчет о результатах тестирования 
+**Достать отчет о результатах тестирования**
 ```
 cd target/
 allure serve
 ```
-Удалить скомпилированные файлы из каталога taget
+**Удалить скомпилированные файлы из каталога taget**
 ```
 mvn clean
 ```
 
 ## Полезные ссылки 
-Чек-листы для наборов тестов - (https://docs.google.com/spreadsheets/d/1Opw26fJkjDXuF2LO_o8r3zlDwh-aN34Vp1fk7KeGlpI/edit?usp=sharing)https://docs.google.com/spreadsheets/d/1Opw26fJkjDXuF2LO_o8r3zlDwh-aN34Vp1fk7KeGlpI/edit?usp=sharing).
+Чек-листы для наборов тестов - (https://docs.google.com/spreadsheets/d/1Opw26fJkjDXuF2LO_o8r3zlDwh-aN34Vp1fk7KeGlpI/edit?usp=sharing).
 
 Ссылка на презентацию проекта - (https://docs.google.com/presentation/d/1Tsey7NLMEXoXmzno5b3hhZ-aTnyPhiIK/edit?usp=sharing&ouid=102000424570315181245&rtpof=true&sd=true)
