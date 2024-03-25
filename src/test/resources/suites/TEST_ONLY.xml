@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="apitests.get.ApiGetTests"/>
+            <class name="apitests.post.ApiPostTests"/>
         </classes>
     </test>
 </suite>

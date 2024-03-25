@@ -34,7 +34,7 @@ public class UserFlowTests extends BaseTest {
                 .waitUntilPageLoaded();
         Assert.assertEquals(get(Header.class).getNumberOfItemsInBasket(), "1");
         get(SearchResultPage.class)
-                .addToBasket(2)
+                .addToBasket(3)
                 .waitUntilPageLoaded();
         Assert.assertEquals(get(Header.class).getNumberOfItemsInBasket(), "2");
     }
@@ -57,7 +57,7 @@ public class UserFlowTests extends BaseTest {
         get(BasketPage.class)
                 .waitUntilPageLoaded();
         for (int i = 0; i < 3; i++) {
-            get(BasketPage.class).waitUntilPageLoaded().plusProductQuantity("", 1);
+            get(BasketPage.class).waitUntilPageLoaded().plusProductQuantity("", 2);
             Assert.assertEquals(get(BasketPage.class).getTotalPriceNum(), get(BasketPage.class).getTotalPriceBySum(), "The real total price doesn't equal to the one displayed on page");
         }
     }

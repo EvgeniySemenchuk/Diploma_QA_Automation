@@ -29,7 +29,7 @@ public abstract class BaseTest {
         try {
             instance = page.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
-                IllegalAccessException e) {
+                IllegalAccessException e ) {
             throw new RuntimeException(e);
         }
         return instance;
