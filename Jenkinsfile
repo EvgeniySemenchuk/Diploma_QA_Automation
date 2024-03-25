@@ -16,15 +16,12 @@ pipeline {
             powershell 'mvn test -Dconfig=%CONFIG% -Dsuite=%SUITE%'
             }
         }
-        stage('Copy logs') {
-            steps {
-            archiveArtifacts artifacts: 'target/logs/*', followSymlinks: false
-            }
-        }
+
     }
 
     post("Allure results") {
         always {
+         archiveArtifacts artifacts: 'target/logs/*', followSymlinks: false
             allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
         }
     }
