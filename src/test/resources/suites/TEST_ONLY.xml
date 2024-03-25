@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="basket.AddAndDeleteItemsTests"/>
+            <class name="dialogWindow.DialogWindowTests"/>
         </classes>
     </test>
 </suite>

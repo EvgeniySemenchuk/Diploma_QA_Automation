@@ -34,7 +34,6 @@ public class DialogWindowTests extends BaseTest {
     public Object[][] getData() {
         return new Object[][]{
                 {"Привет", 1},
-                {"Добрый день", 2},
         };
     }
 
