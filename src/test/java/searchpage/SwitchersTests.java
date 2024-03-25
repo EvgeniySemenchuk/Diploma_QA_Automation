@@ -23,11 +23,10 @@ public class SwitchersTests extends BaseTest {
         get(Header.class).search("Штаны");
         get(SearchResultPage.class)
                 .verifyPage()
-                .chooseSwitcher("цене");
+                .chooseSwitcher("Возрастанию цены");
         get(SearchResultPage.class)
                 .verifyPage()
                 .waitUntilPageLoaded();
-        System.out.println(get(SearchResultPage.class).getProductPricesDouble());
         Assert.assertTrue(get(SearchResultPage.class).verifyPriceSwitcher(), "Smth went wrong");
     }
 

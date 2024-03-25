@@ -24,11 +24,12 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
     private final By notFoundTitle = By.xpath("//*[@class=\"page-not-found__title\"]");
     private final By productPrices = By.xpath("//*[@data-tag=\"salePrice\"]");
     private final By filtersBtn = By.xpath("//button[@data-text=\"strFilters\"]");
-    private final By totalUsedFilters = By.xpath("//span[@data-tag=\"totalDesktop\"]");
     private final By naviCategory = By.xpath("//*[@class=\"breadcrumbs\"]//li[@class=\"breadcrumb-item has-sub-menu\"]");
+    private final By sortFiltersBtn = By.xpath("(//*[@data-tag=\"chipActionButton\"])[8]");
 
-    private String getSwitcher(String switcher) {
-        return "//*[@class=\"switcher\"]//button[contains(text(), \"" + switcher.toLowerCase() + "\")]";
+
+    private String getSortSwitcher(String switcher) {
+        return "//div[@class=\"chip-filter-box\"]//div[@class=\"filter__item \" or @class=\"filter__item is-active\"]//span[contains(text(), \""+switcher+"\")]";
     }
 
     public SearchResultPage openFilters() {
@@ -37,7 +38,8 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
     }
 
     public SearchResultPage chooseSwitcher(String switcher) {
-        click(getSwitcher(switcher));
+        click(sortFiltersBtn);
+        click(getSortSwitcher(switcher));
         return me();
     }
 
@@ -197,8 +199,5 @@ public class SearchResultPage extends BaseWBPage<SearchResultPage> {
         return driver.findElement(searchResult).isDisplayed();
     }
 
-    public String getTotalUsedFilters() {
-        return getElementText(totalUsedFilters);
-    }
 
 }

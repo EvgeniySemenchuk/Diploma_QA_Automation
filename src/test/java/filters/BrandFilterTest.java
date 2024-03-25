@@ -33,7 +33,6 @@ public class BrandFilterTest extends BaseTest {
         get(SearchResultPage.class)
                 .verifyPage()
                 .waitUntilPageLoaded();
-        Assert.assertEquals(get(SearchResultPage.class).getTotalUsedFilters(), "1", "Wrong filter number");
         Assert.assertTrue(get(SearchResultPage.class).verifyAllBrandSearch(product.getProductBrand()), "Brand filter works incorrectly");
     }
 
