@@ -23,7 +23,9 @@ public class AddAndDeleteItemsTests extends BaseTest {
         get(Header.class).search(item);
         get(SearchResultPage.class).verifyPage()
                 .addToBasket(item,1)
+                .waitUntilPageLoaded()
                 .addToBasket(item,2)
+                .waitUntilPageLoaded()
                 .addToBasket(item,3);
         get(Header.class).moveToShoppingCard();
         get(BasketPage.class).waitUntilPageLoaded();
@@ -35,7 +37,9 @@ public class AddAndDeleteItemsTests extends BaseTest {
         get(Header.class).moveToShoppingCard();
         get(BasketPage.class).waitUntilPageLoaded()
                         .deleteProduct(item)
+                        .waitUntilPageLoaded()
                         .deleteProduct(item)
+                        .waitUntilPageLoaded()
                         .deleteProduct(item);
         Assert.assertEquals(get(BasketPage.class).getBasketSize().toString(), deleteIndex);
     }

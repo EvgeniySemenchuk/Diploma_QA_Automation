@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="apitests.get.ApiGetTests"/>
+            <class name="basket.AddAndDeleteItemsTests"/>
         </classes>
     </test>
 </suite>
