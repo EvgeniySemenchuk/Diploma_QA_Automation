@@ -3,7 +3,7 @@
 <suite name="TEST_ONLY">
     <test name="test only">
         <classes>
-            <class name="dialogWindow.DialogWindowTests"/>
+            <class name="searchpage.SearchByArticleTests"/>
         </classes>
     </test>
 </suite>

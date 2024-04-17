@@ -27,8 +27,8 @@ public class DataExceedingLimitTests extends BaseTest {
     @DataProvider(name = "filepath")
     public Object[][] getData() {
         return new Object[][]{
-                {"src/test/resources/files/484symbols.txt", true},
-                {"src/test/resources/files/485symbols.txt", false},
+                {"src/test/resources/files/480symbols.txt", true},
+                {"src/test/resources/files/481symbols.txt", false},
 
         };
     }

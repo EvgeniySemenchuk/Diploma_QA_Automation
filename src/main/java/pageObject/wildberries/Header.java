@@ -68,7 +68,6 @@ public class Header extends BaseWBPage<Header> {
         return strBuilder.toString();
     }
 
-
     public Header entrance() {
         click(entranceBtn);
         return me();

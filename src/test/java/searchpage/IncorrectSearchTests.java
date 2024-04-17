@@ -28,9 +28,9 @@ public class IncorrectSearchTests extends BaseTest {
     @DataProvider(name = "search")
     public Object[][] getData() {
         return new Object[][]{
-                {"-----"},
-                {"######"},
-                {",.,.,."},
+                {"1111221"},
+                {"`123"},
+                {"!@#$%^&*()_zzx21421"},
         };
     }
 
